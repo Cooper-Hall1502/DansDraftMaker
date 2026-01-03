@@ -6,6 +6,7 @@ magic_list_legendary = []
 
 more_cards = True
 end_code = False
+restart_code = True
 
 def add_cards():
     global more_cards
@@ -28,6 +29,11 @@ def add_cards():
     choice = input("Do you want to add more cards y/n: ").lower()
     if choice == "n":
         more_cards = False
+    elif choice == "y":
+        more_cards = True
+    else:
+        print("input not valid please type a 'y' or 'n'")
+
 
 
 def add_common(number_of_cards):
@@ -75,7 +81,7 @@ def random_card():
         return
 
     if number_of_cards > len(source_list):
-        print("Not enough cards in this list.")
+        print(f"Not enough cards in this list. Your list has {len(source_list)} cards.")
         return
 
     random_list = []
@@ -93,11 +99,30 @@ def random_card():
     another_go = input("Do you need to pull more cards y/n: ").lower()
     if another_go == "n":
         end_code = True
+    elif another_go == "y":
+        end_code = False
+    else:
+        print("input not valid please type 'y' or 'n'")
 
 
 
+def code_run():
+    global end_code, more_cards,restart_code
+    while more_cards:
+        add_cards()
+    while end_code is False:
+        random_card()
+    restart = input("Do you want to restart? y/n: ").lower()
+    if restart == "y":
+        more_cards = True
+        end_code = False
+    elif restart == "n":
+        more_cards = False
+        end_code = True
+        restart_code = False
+    else:
+        print("input not valid please choose y or n")
 
-while more_cards:
-    add_cards()
-while end_code is False:
-    random_card()
+
+while restart_code:
+    code_run()
